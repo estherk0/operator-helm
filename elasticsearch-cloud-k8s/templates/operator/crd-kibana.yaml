@@ -6,7 +6,7 @@ metadata:
   labels:
     app: {{ template "eck.name" . }}-kibana
     controller-tools.k8s.io: "1.0"
-  name: {{ printf "kibanas.%" (.Values.elasticsearchOperator.crdApiGroup | default "kibana.k8s.elastic.co") }}
+  name: {{ printf "kibanas.%s" (.Values.elasticsearchOperator.crdApiGroup | default "kibana.k8s.elastic.co") }}
 spec:
   additionalPrinterColumns:
   - JSONPath: .status.health
