@@ -1,4 +1,4 @@
-{{- if and .Values.elasticsearch.Operator.enabled .Values.elasticsearchOperator.createCustomResource -}}
+{{- if and .Values.elasticsearchOperator.enabled .Values.elasticsearchOperator.createCustomResource -}}
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:

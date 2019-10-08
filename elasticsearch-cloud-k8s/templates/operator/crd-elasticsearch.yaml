@@ -4,13 +4,13 @@ kind: CustomResourceDefinition
 metadata:
   creationTimestamp: null
   labels:
-    app: {{ template "elasticsearch.name" . }}-operator
+    app: {{ template "eck.name" . }}-operator
     controller-tools.k8s.io: "1.0"
   name: {{ printf "eck.%s" (.Values.elasticsearchOperator.crdApiGroup | default "elasticsearch.k8s.elastic.co") }}
   annotations:
-{{ -if .Vaules.elasticsearchOperator.cleanupBeforeInstall }}
+{{- if .Values.elasticsearchOperator.cleanupBeforeInstall }}
   "helm.sh/hook-delete-policy": "before-hook-creation"
-{{ - end }}
+{{- end }}
   "helm.sh/hook": crd-install
 spec:
   additionalPrinterColumns:
