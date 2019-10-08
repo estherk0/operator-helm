@@ -6,7 +6,7 @@ metadata:
   labels:
     app: {{ template "eck.name" . }}-operator
     controller-tools.k8s.io: "1.0"
-  name: {{ printf "eck.%s" (.Values.elasticsearchOperator.crdApiGroup | default "elasticsearch.k8s.elastic.co") }}
+  name: {{ printf "elasticsearches.%s" (.Values.elasticsearchOperator.crdApiGroup | default "elasticsearch.k8s.elastic.co") }}
   annotations:
 {{- if .Values.elasticsearchOperator.cleanupBeforeInstall }}
   "helm.sh/hook-delete-policy": "before-hook-creation"

@@ -23,7 +23,7 @@ spec:
   - JSONPath: .metadata.creationTimestamp
     name: age
     type: date
-  group: kibana.k8s.elastic.co
+  group: {{ .Values.elasticsearchOperator.crdApiGroup }}
   names:
     categories:
     - elastic
