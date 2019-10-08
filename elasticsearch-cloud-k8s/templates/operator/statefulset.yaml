@@ -18,7 +18,7 @@ spec:
     spec:
       serviceAccountName: {{ template "eck.name" . }}-operator
       containers:
-      - image: {{ .Values.images.eck-operator }}
+      - image: {{ .Values.images.eckOperator }}
         name: manager
         args: ["manager", "--operator-roles", "all", "--enable-debug-logs=false"]
         env:
@@ -31,7 +31,7 @@ spec:
           - name: WEBHOOK_PODS_LABEL
             value: {{ template "eck.name" . }}-operator
           - name: OPERATOR_IMAGE
-            value: {{ .Values.images.eck-operator }}
+            value: {{ .Values.images.eckOperator }}
         resources:
           limits:
             cpu: 1

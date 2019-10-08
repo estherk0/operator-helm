@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 images:
-  eck-operator: docker.elastic.co/eck/eck-operator:0.9.0
+  eckOperator: docker.elastic.co/eck/eck-operator:0.9.0
 
 elasticsearchOperator:
   enabled: true
