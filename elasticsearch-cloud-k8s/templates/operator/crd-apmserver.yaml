@@ -5,7 +5,7 @@ metadata:
   creationTimestamp: null
   labels:
     controller-tools.k8s.io: "1.0"
-  name: {{ printf "apmservers.%s" (.Values.elasticsearchOperator.crdApiGroup | default "apm.k8s.elastic.co") }}
+  name: apmservers.apm.k8s.elastic.co
 spec:
   additionalPrinterColumns:
   - JSONPath: .status.health
@@ -22,7 +22,7 @@ spec:
   - JSONPath: .metadata.creationTimestamp
     name: age
     type: date
-  group: {{ .Values.elasticsearchOperator.crdApiGroup | default "apm.k8s.elastic.co" }}
+  group: apm.k8s.elastic.co
   names:
     categories:
     - elastic

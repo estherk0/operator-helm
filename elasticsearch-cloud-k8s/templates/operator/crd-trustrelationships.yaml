@@ -5,9 +5,9 @@ metadata:
   creationTimestamp: null
   labels:
     controller-tools.k8s.io: "1.0"
-  name: {{ printf "trustrelationships.%s" (.Values.elasticsearchOperator.crdApiGroup | default "elasticsearch.k8s.elastic.co") }}
+  name: trustrelationships.elasticsearch.k8s.elastic.co
 spec:
-  group: {{ .Values.elasticsearchOperator.crdApiGroup | default "elasticsearch.k8s.elastic.co" }}
+  group: elasticsearch.k8s.elastic.co
   names:
     kind: TrustRelationship
     plural: trustrelationships

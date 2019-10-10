@@ -59,7 +59,7 @@ rules:
   - patch
   - delete
 - apiGroups:
-  - {{ .Values.elasticsearchOperator.crdApiGroup | default "elasticsearch.k8s.elastic.co" }}
+  - elasticsearch.k8s.elastic.co
   resources:
   - elasticsearches
   - elasticsearches/status
@@ -75,7 +75,7 @@ rules:
   - patch
   - delete
 - apiGroups:
-  - {{ .Values.elasticsearchOperator.crdApiGroup | default "kibana.k8s.elastic.co" }}
+  - kibana.k8s.elastic.co
   resources:
   - kibanas
   - kibanas/status
@@ -89,7 +89,7 @@ rules:
   - patch
   - delete
 - apiGroups:
-  - {{ .Values.elasticsearchOperator.crdApiGroup | default "apm.k8s.elastic.co" }}
+  - apm.k8s.elastic.co
   resources:
   - apmservers
   - apmservers/status

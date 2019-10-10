@@ -6,7 +6,7 @@ metadata:
   labels:
     app: {{ template "eck.name" . }}-kibana
     controller-tools.k8s.io: "1.0"
-  name: {{ printf "kibanas.%s" (.Values.elasticsearchOperator.crdApiGroup | default "kibana.k8s.elastic.co") }}
+  name: kibanas.kibana.k8s.elastic.co
 spec:
   additionalPrinterColumns:
   - JSONPath: .status.health
@@ -23,7 +23,7 @@ spec:
   - JSONPath: .metadata.creationTimestamp
     name: age
     type: date
-  group: {{ .Values.elasticsearchOperator.crdApiGroup }}
+  group: kibana.k8s.elastic.co
   names:
     categories:
     - elastic

@@ -11,8 +11,5 @@ elasticsearchOperator:
   ## Create CRDs
   createCustomResource: true
 
-  ## Customize CRDs API Group
-  crdApiGroup: elasticsearch.k8s.elastic.co
-
   ## Remove CRDs before installation
   cleanupBeforeInstall: false
