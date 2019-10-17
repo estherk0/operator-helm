@@ -1669,3 +1669,32 @@ prometheus:
           ## Server name used to verify host name
           ##
           # serverName: ""
+
+openstackExporter: 
+  ## Enable openstack exporter. default is false
+  enabled: flase
+
+  serviceMonitor:
+
+    ## Scrape Interval
+    ##
+    interval: 60s
+    
+    ##  metric relabel configs 
+    ##
+    metricRelabelings: []
+
+    ##  relabel configs 
+    ##
+    relabelings: []
+
+processExporter:
+  enabled: true
+
+  serviceMonitor:
+  
+    interval: 30s
+
+    metricRelabelings: []
+ 
+    relabelings: []
