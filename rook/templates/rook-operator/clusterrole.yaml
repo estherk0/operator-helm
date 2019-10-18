@@ -1,4 +1,4 @@
-{{- if .Values.rbacEnable }}
+{{- if .Values.rookOperator.rbacEnable }}
 # The cluster role for managing all the cluster-specific resources in a namespace
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
@@ -6,7 +6,7 @@ metadata:
   name: rook-ceph-cluster-mgmt
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
 aggregationRule:
   clusterRoleSelectors:
   - matchLabels:
@@ -19,7 +19,7 @@ metadata:
   name: rook-ceph-cluster-mgmt-rules
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
     rbac.rook.ceph.io/aggregate-to-rook-ceph-cluster-mgmt: "true"
 rules:
 - apiGroups:
@@ -58,7 +58,7 @@ metadata:
   name: rook-ceph-global
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
 aggregationRule:
   clusterRoleSelectors:
   - matchLabels:
@@ -71,7 +71,7 @@ metadata:
   name: rook-ceph-global-rules
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
     rbac.ceph.rook.io/aggregate-to-rook-ceph-global: "true"
 rules:
 - apiGroups:
@@ -173,7 +173,7 @@ metadata:
   name: rook-ceph-mgr-cluster
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
 aggregationRule:
   clusterRoleSelectors:
   - matchLabels:
@@ -186,7 +186,7 @@ metadata:
   name: rook-ceph-mgr-cluster-rules
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
     rbac.ceph.rook.io/aggregate-to-rook-ceph-mgr-cluster: "true"
 rules:
 - apiGroups:
@@ -243,7 +243,7 @@ metadata:
   name: rook-ceph-object-bucket
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
     rbac.ceph.rook.io/aggregate-to-rook-ceph-mgr-cluster: "true"
 rules:
 - apiGroups:
@@ -267,7 +267,7 @@ rules:
   - "*"
   resources:
   - "*"
-{{- if ((.Values.agent) and .Values.agent.mountSecurityMode) and ne .Values.agent.mountSecurityMode "Any" }}
+{{- if ((.Values.rookOperator.agent) and .Values.rookOperator.agent.mountSecurityMode) and ne .Values.rookOperator.agent.mountSecurityMode "Any" }}
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -288,7 +288,7 @@ metadata:
   name: rook-ceph-agent-mount
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
 aggregationRule:
   clusterRoleSelectors:
   - matchLabels:
@@ -301,7 +301,7 @@ metadata:
   name: rook-ceph-agent-mount-rules
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
     rbac.ceph.rook.io/aggregate-to-rook-ceph-agent-mount: "true"
 rules:
 - apiGroups:
@@ -474,7 +474,7 @@ rules:
     resources: ["volumesnapshots/status"]
     verbs: ["update"]
 {{- end }}
-{{- if .Values.pspEnable }}
+{{- if .Values.rookOperator.pspEnable }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
@@ -482,7 +482,7 @@ metadata:
   name: rook-ceph-system-psp-user
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 aggregationRule:
   clusterRoleSelectors:
@@ -496,7 +496,7 @@ metadata:
   name: 'psp:rook'
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     rbac.ceph.rook.io/aggregate-to-rook-ceph-system-psp-user: "true"
 rules:

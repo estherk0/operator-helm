@@ -4,7 +4,7 @@ metadata:
   name: rook-ceph-operator
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
   replicas: 1
@@ -16,129 +16,129 @@ spec:
       labels:
         app: rook-ceph-operator
         chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-{{- if .Values.annotations }}
+{{- if .Values.rookOperator.annotations }}
       annotations:
-{{ toYaml .Values.annotations | indent 8 }}
+{{ toYaml .Values.rookOperator.annotations | indent 8 }}
 {{- end }}
     spec:
       containers:
       - name: rook-ceph-operator
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        image: "{{ .Values.rookOperator.image.repository }}:{{ .Values.rookOperator.image.tag }}"
+        imagePullPolicy: {{ .Values.rookOperator.image.pullPolicy }}
         args: ["ceph", "operator"]
         env:
         - name: ROOK_CURRENT_NAMESPACE_ONLY
-          value: {{ .Values.currentNamespaceOnly | quote }}
-{{- if not .Values.rbacEnable }}
+          value: {{ .Values.rookOperator.currentNamespaceOnly | quote }}
+{{- if not .Values.rookOperator.rbacEnable }}
         - name: RBAC_ENABLED
           value: "false"
 {{- end }}
-{{- if .Values.agent }}
-{{- if .Values.agent.toleration }}
+{{- if .Values.rookOperator.agent }}
+{{- if .Values.rookOperator.agent.toleration }}
         - name: AGENT_TOLERATION
-          value: {{ .Values.agent.toleration }}
+          value: {{ .Values.rookOperator.agent.toleration }}
 {{- end }}
-{{- if .Values.agent.tolerationKey }}
+{{- if .Values.rookOperator.agent.tolerationKey }}
         - name: AGENT_TOLERATION_KEY
-          value: {{ .Values.agent.tolerationKey }}
+          value: {{ .Values.rookOperator.agent.tolerationKey }}
 {{- end }}
-{{- if .Values.agent.tolerations }}
+{{- if .Values.rookOperator.agent.tolerations }}
         - name: AGENT_TOLERATIONS
-          value: {{ toYaml .Values.agent.tolerations | quote }}
+          value: {{ toYaml .Values.rookOperator.agent.tolerations | quote }}
 {{- end }}
-{{- if .Values.agent.nodeAffinity }}
+{{- if .Values.rookOperator.agent.nodeAffinity }}
         - name: AGENT_NODE_AFFINITY
-          value: {{ .Values.agent.nodeAffinity }}
+          value: {{ .Values.rookOperator.agent.nodeAffinity }}
 {{- end }}
-{{- if .Values.agent.mountSecurityMode }}
+{{- if .Values.rookOperator.agent.mountSecurityMode }}
         - name: AGENT_MOUNT_SECURITY_MODE
-          value: {{ .Values.agent.mountSecurityMode }}
+          value: {{ .Values.rookOperator.agent.mountSecurityMode }}
 {{- end }}
-{{- if .Values.agent.flexVolumeDirPath }}
+{{- if .Values.rookOperator.agent.flexVolumeDirPath }}
         - name: FLEXVOLUME_DIR_PATH
-          value: {{ .Values.agent.flexVolumeDirPath }}
+          value: {{ .Values.rookOperator.agent.flexVolumeDirPath }}
 {{- end }}
-{{- if .Values.agent.libModulesDirPath }}
+{{- if .Values.rookOperator.agent.libModulesDirPath }}
         - name: LIB_MODULES_DIR_PATH
-          value: {{ .Values.agent.libModulesDirPath }}
+          value: {{ .Values.rookOperator.agent.libModulesDirPath }}
 {{- end }}
-{{- if .Values.agent.mounts }}
+{{- if .Values.rookOperator.agent.mounts }}
         - name: AGENT_MOUNTS
-          value: {{ .Values.agent.mounts }}
+          value: {{ .Values.rookOperator.agent.mounts }}
 {{- end }}
 {{- end }}
-{{- if .Values.discover }}
-{{- if .Values.discover.toleration }}
+{{- if .Values.rookOperator.discover }}
+{{- if .Values.rookOperator.discover.toleration }}
         - name: DISCOVER_TOLERATION
-          value: {{ .Values.discover.toleration }}
+          value: {{ .Values.rookOperator.discover.toleration }}
 {{- end }}
-{{- if .Values.discover.tolerationKey }}
+{{- if .Values.rookOperator.discover.tolerationKey }}
         - name: DISCOVER_TOLERATION_KEY
-          value: {{ .Values.discover.tolerationKey }}
+          value: {{ .Values.rookOperator.discover.tolerationKey }}
 {{- end }}
-{{- if .Values.discover.tolerations }}
+{{- if .Values.rookOperator.discover.tolerations }}
         - name: DISCOVER_TOLERATIONS
-          value: {{ toYaml .Values.discover.tolerations | quote }}
+          value: {{ toYaml .Values.rookOperator.discover.tolerations | quote }}
 {{- end }}
-{{- if .Values.discover.nodeAffinity }}
+{{- if .Values.rookOperator.discover.nodeAffinity }}
         - name: DISCOVER_AGENT_NODE_AFFINITY
-          value: {{ .Values.discover.nodeAffinity }}
+          value: {{ .Values.rookOperator.discover.nodeAffinity }}
 {{- end }}
 {{- end }}
         - name: ROOK_HOSTPATH_REQUIRES_PRIVILEGED
-          value: "{{ .Values.hostpathRequiresPrivileged }}"
+          value: "{{ .Values.rookOperator.hostpathRequiresPrivileged }}"
         - name: ROOK_LOG_LEVEL
-          value: {{ .Values.logLevel }}
+          value: {{ .Values.rookOperator.logLevel }}
         - name: ROOK_ENABLE_SELINUX_RELABELING
-          value: "{{ .Values.enableSelinuxRelabeling }}"
+          value: "{{ .Values.rookOperator.enableSelinuxRelabeling }}"
         - name: ROOK_DISABLE_DEVICE_HOTPLUG
-          value: "{{ .Values.disableDeviceHotplug }}"
-{{- if .Values.csi }}
+          value: "{{ .Values.rookOperator.disableDeviceHotplug }}"
+{{- if .Values.rookOperator.csi }}
         - name: ROOK_CSI_ENABLE_RBD
-          value: {{ .Values.csi.enableRbdDriver | quote }}
+          value: {{ .Values.rookOperator.csi.enableRbdDriver | quote }}
         - name: ROOK_CSI_ENABLE_CEPHFS
-          value: {{ .Values.csi.enableCephfsDriver | quote }}
-{{- if .Values.csi.kubeletDirPath }}
+          value: {{ .Values.rookOperator.csi.enableCephfsDriver | quote }}
+{{- if .Values.rookOperator.csi.kubeletDirPath }}
         - name: ROOK_CSI_KUBELET_DIR_PATH
-          value: {{ .Values.csi.kubeletDirPath | quote }}
+          value: {{ .Values.rookOperator.csi.kubeletDirPath | quote }}
 {{- end }}
         - name: ROOK_CSI_ENABLE_GRPC_METRICS
-          value: {{ .Values.csi.enableGrpcMetrics | quote }}
-{{- if .Values.csi.cephcsi }}
-{{- if .Values.csi.cephcsi.image }}
+          value: {{ .Values.rookOperator.csi.enableGrpcMetrics | quote }}
+{{- if .Values.rookOperator.csi.cephcsi }}
+{{- if .Values.rookOperator.csi.cephcsi.image }}
         - name: ROOK_CSI_CEPH_IMAGE
-          value: {{ .Values.csi.cephcsi.image | quote }}
+          value: {{ .Values.rookOperator.csi.cephcsi.image | quote }}
 {{- end }}
 {{- end }}
-{{- if .Values.csi.registrar }}
-{{- if .Values.csi.registrar.image }}
+{{- if .Values.rookOperator.csi.registrar }}
+{{- if .Values.rookOperator.csi.registrar.image }}
         - name: ROOK_CSI_REGISTRAR_IMAGE
-          value: {{ .Values.csi.registrar.image | quote }}
+          value: {{ .Values.rookOperator.csi.registrar.image | quote }}
 {{- end }}
 {{- end }}
-{{- if .Values.csi.provisioner }}
-{{- if .Values.csi.provisioner.image }}
+{{- if .Values.rookOperator.csi.provisioner }}
+{{- if .Values.rookOperator.csi.provisioner.image }}
         - name: ROOK_CSI_PROVISIONER_IMAGE
-          value: {{ .Values.csi.provisioner.image | quote }}
+          value: {{ .Values.rookOperator.csi.provisioner.image | quote }}
 {{- end }}
 {{- end }}
-{{- if .Values.csi.snapshotter }}
-{{- if .Values.csi.snapshotter.image }}
+{{- if .Values.rookOperator.csi.snapshotter }}
+{{- if .Values.rookOperator.csi.snapshotter.image }}
         - name: ROOK_CSI_SNAPSHOTTER_IMAGE
-          value: {{ .Values.csi.snapshotter.image | quote }}
+          value: {{ .Values.rookOperator.csi.snapshotter.image | quote }}
 {{- end }}
 {{- end }}
-{{- if .Values.csi.attacher }}
-{{- if .Values.csi.attacher.image }}
+{{- if .Values.rookOperator.csi.attacher }}
+{{- if .Values.rookOperator.csi.attacher.image }}
         - name: ROOK_CSI_ATTACHER_IMAGE
-          value: {{ .Values.csi.attacher.image | quote }}
+          value: {{ .Values.rookOperator.csi.attacher.image | quote }}
 {{- end }}
 {{- end }}
 {{- end }}
         - name: ROOK_ENABLE_FLEX_DRIVER
-          value: "{{ .Values.enableFlexDriver }}"
+          value: "{{ .Values.rookOperator.enableFlexDriver }}"
         - name: ROOK_ENABLE_DISCOVERY_DAEMON
-          value: "{{ .Values.enableDiscoveryDaemon }}"
+          value: "{{ .Values.rookOperator.enableDiscoveryDaemon }}"
 
         - name: NODE_NAME
           valueFrom:
@@ -152,30 +152,30 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-{{- if .Values.cephStatusCheckInterval }}
+{{- if .Values.rookOperator.cephStatusCheckInterval }}
         - name: ROOK_CEPH_STATUS_CHECK_INTERVAL
-          value: {{ .Values.cephStatusCheckInterval }}
+          value: {{ .Values.rookOperator.cephStatusCheckInterval }}
 {{- end }}
-{{- if .Values.mon }}
-{{- if .Values.mon.healthCheckInterval }}
+{{- if .Values.rookOperator.mon }}
+{{- if .Values.rookOperator.mon.healthCheckInterval }}
         - name: ROOK_MON_HEALTHCHECK_INTERVAL
-          value: {{ .Values.mon.healthCheckInterval }}
+          value: {{ .Values.rookOperator.mon.healthCheckInterval }}
 {{- end }}
-{{- if .Values.mon.monOutTimeout }}
+{{- if .Values.rookOperator.mon.monOutTimeout }}
         - name: ROOK_MON_OUT_TIMEOUT
-          value: {{ .Values.mon.monOutTimeout }}
+          value: {{ .Values.rookOperator.mon.monOutTimeout }}
 {{- end }}
 {{- end }}
         resources:
-{{ toYaml .Values.resources | indent 10 }}
-{{- if .Values.nodeSelector }}
+{{ toYaml .Values.rookOperator.resources | indent 10 }}
+{{- if .Values.rookOperator.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
+{{ toYaml .Values.rookOperator.nodeSelector | indent 8 }}
 {{- end }}
-{{- if .Values.tolerations }}
+{{- if .Values.rookOperator.tolerations }}
       tolerations:
-{{ toYaml .Values.tolerations | indent 8 }}
+{{ toYaml .Values.rookOperator.tolerations | indent 8 }}
 {{- end }}
-{{- if .Values.rbacEnable }}
+{{- if .Values.rookOperator.rbacEnable }}
       serviceAccountName: rook-ceph-system
 {{- end }}

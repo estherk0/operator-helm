@@ -1,4 +1,4 @@
-{{- if .Values.rbacEnable }}
+{{- if .Values.rookOperator.rbacEnable }}
 # The role for the operator to manage resources in its own namespace
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
@@ -6,7 +6,7 @@ metadata:
   name: rook-ceph-system
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
 rules:
 - apiGroups:
   - ""

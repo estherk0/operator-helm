@@ -1,4 +1,4 @@
-{{- if .Values.pspEnable }}
+{{- if .Values.rookOperator.pspEnable }}
 # PSP for rook-ceph-operator
 
 # Most of the teams follow the kubernetes docs and have these PSPs.

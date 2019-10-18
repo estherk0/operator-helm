@@ -1,4 +1,4 @@
-{{- if .Values.rbacEnable }}
+{{- if .Values.rookOperator.rbacEnable }}
 # Grant the rook system daemons cluster-wide access to manage the Rook CRDs, PVCs, and storage classes
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -6,7 +6,7 @@ metadata:
   name: rook-ceph-global
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -97,7 +97,7 @@ roleRef:
   name: rbd-external-provisioner-runner
   apiGroup: rbac.authorization.k8s.io
 
-{{- if .Values.pspEnable }}
+{{- if .Values.rookOperator.pspEnable }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -105,7 +105,7 @@ metadata:
   name: rook-ceph-system-psp-users
   labels:
     operator: rook
-    storage-backend: ceph
+    storage-backend: {{ .Values.rookOperator.storageType }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
