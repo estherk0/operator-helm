@@ -1,5 +1,5 @@
 {{- if .Values.processExporter.enabled }}
-apiVersion: {{ printf "%s/v1" (.Values.processOperator.crdApiGroup | default "monitoring.coreos.com") }}
+apiVersion: {{ printf "%s/v1" (.Values.prometheusOperator.crdApiGroup | default "monitoring.coreos.com") }}
 kind: ServiceMonitor
 metadata:
   name: {{ template "prometheus-operator.name" . }}-process-exporter
