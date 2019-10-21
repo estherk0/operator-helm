@@ -2,9 +2,9 @@
 apiVersion: {{ printf "%s/v1" (.Values.prometheusOperator.crdApiGroup | default "monitoring.coreos.com") }}
 kind: ServiceMonitor
 metadata:
-  name: {{ template "prometheus-operator.name" . }}-openstack-exporter
+  name: {{ template "prometheus-operator.fullname" . }}-openstack-exporter
   labels:
-    app: {{ template "prometheus-operator.name" . }}-openstack-exporter
+    app: {{ template "prometheus-operator.fullname" . }}-openstack-exporter
 {{ include "prometheus-operator.labels" . | indent 4 }}
 spec:
   jobLabel: {{ .Values.openstackExporter.jobLabel }}
