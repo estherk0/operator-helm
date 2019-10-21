@@ -14,3 +14,13 @@ dependencies:
     version: 3.8.*
     repository: https://kubernetes-charts.storage.googleapis.com/
     condition: grafana.enabled
+
+  - name: prometheus-process-exporter
+    version: 0.1.0
+    repository: http://localhost:8879/charts
+    condition: processExporter.enabled
+
+  - name: prometheus-openstack-exporter
+    version: 0.1.0
+    repository: http://localhost:8879/charts
+    codition: openstackExporter.enabled
