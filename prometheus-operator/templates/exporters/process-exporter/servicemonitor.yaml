@@ -7,7 +7,7 @@ metadata:
     app: {{ template "prometheus-operator.name" . }}-process-exporter
 {{ include "prometheus-operator.labels" . | indent 4 }}
 spec:
-  jobLabel: {{ .Values.processExporter.jobLabel | "jobLabel" }}
+  jobLabel: {{ .Values.processExporter.jobLabel }}
   selector:
     matchLabels:
       app: prometheus-process-exporter
